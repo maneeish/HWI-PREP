@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        vector<vector<int>> result;
+        vector<int> currentPath;
+        dfs(root, targetSum, currentPath, result);
+        return result;
+    }
+
+private:
+    void dfs(TreeNode* node, int remainingSum, vector<int>& currentPath, vector<vector<int>>& result) {
+        if (!node) return;
+
+        currentPath.push_back(node->val);
+        remainingSum -= node->val;
+
+        if (!node->left && !node->right && remainingSum == 0) {
+            result.push_back(currentPath);
+        }
+
+        
+        dfs(node->left, remainingSum, currentPath, result);
+        dfs(node->right, remainingSum, currentPath, result);
+
+       
+        currentPath.pop_back();
+    }
+};
